@@ -9,7 +9,7 @@ function App() {
     <div>
       <Header />
 
-      <RouteSection />
+        <RouteSection />
 
       <Footer />
     </div>
