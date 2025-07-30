@@ -8,9 +8,7 @@ function App() {
   return (
     <div>
       <Header />
-
       <RouteSection />
-
       <Footer />
     </div>
   )
