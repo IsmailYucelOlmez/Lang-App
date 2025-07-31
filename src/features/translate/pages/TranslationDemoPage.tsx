@@ -1,4 +1,6 @@
 import TranslationProvider from "../components/TranslationProvider";
+import AudioPlayer from "../../audio/components/AudioPlayer";
+
 const TranslationDemoPage = () => {
   return (
     <TranslationProvider>
@@ -6,6 +8,7 @@ const TranslationDemoPage = () => {
       <div className="text-center mb-10 p-5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl">
         <h1 className="text-4xl font-bold mb-3">Metin Çeviri Demo</h1>
         <p className="text-lg opacity-90">Metni seçmek için fare ile sürükleyin. Çeviri otomatik olarak gösterilecektir.</p>
+        <p className="text-sm opacity-75 mt-2">🎵 Metinleri seslendirmek için ses oynatıcıları kullanın</p>
       </div>
 
       <div className="space-y-8">
@@ -18,6 +21,12 @@ const TranslationDemoPage = () => {
               Hello, how are you today? I hope you are doing well. 
               This is a simple English text that you can select and translate.
             </p>
+            <div className="mt-3">
+              <AudioPlayer 
+                text="Hello, how are you today? I hope you are doing well."
+                className="mt-3"
+              />
+            </div>
           </div>
 
           <div className="mb-6">
@@ -27,6 +36,12 @@ const TranslationDemoPage = () => {
               It was developed by Facebook and is widely used in modern web development. 
               The library allows developers to create reusable UI components.
             </p>
+            <div className="mt-3">
+              <AudioPlayer 
+                text="React is a JavaScript library for building user interfaces."
+                className="mt-3"
+              />
+            </div>
           </div>
 
           <div>
@@ -36,21 +51,43 @@ const TranslationDemoPage = () => {
               The weather is nice today, isn't it? 
               Would you like to go for a walk in the park?
             </p>
+            <div className="mt-3">
+              <AudioPlayer 
+                text="What time is it? I need to catch the bus."
+                className="mt-3"
+              />
+            </div>
           </div>
         </section>
 
         <section className="bg-white rounded-xl p-6 shadow-md border border-gray-200">
           <h2 className="text-2xl font-semibold text-gray-800 mb-5 pb-3 border-b-2 border-gray-100">Uzun Metin</h2>
           <div className="space-y-4">
-            <p className="text-gray-800 leading-relaxed text-justify select-text cursor-text hover:bg-gray-50 hover:rounded p-2 -m-2 transition-colors">
-              The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet at least once. 
-              Pangrams are often used to display font samples and test keyboards. 
-              They are also useful for practicing typing and calligraphy.
-            </p>
-            <p className="text-gray-800 leading-relaxed text-justify select-text cursor-text hover:bg-gray-50 hover:rounded p-2 -m-2 transition-colors">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
+            <div>
+              <p className="text-gray-800 leading-relaxed text-justify select-text cursor-text hover:bg-gray-50 hover:rounded p-2 -m-2 transition-colors">
+                The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet at least once. 
+                Pangrams are often used to display font samples and test keyboards. 
+                They are also useful for practicing typing and calligraphy.
+              </p>
+              <div className="mt-3">
+                <AudioPlayer 
+                  text="The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet at least once. Pangrams are often used to display font samples and test keyboards. They are also useful for practicing typing and calligraphy."
+                  className="mt-3"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="text-gray-800 leading-relaxed text-justify select-text cursor-text hover:bg-gray-50 hover:rounded p-2 -m-2 transition-colors">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </p>
+              <div className="mt-3">
+                <AudioPlayer 
+                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                  className="mt-3"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -62,6 +99,8 @@ const TranslationDemoPage = () => {
               <li>Türkçe çeviri otomatik olarak tooltip'te görünecek</li>
               <li>Tooltip'i kapatmak için X butonuna tıklayın</li>
               <li>Başka bir yere tıklayarak da tooltip'i kapatabilirsiniz</li>
+              <li>🎵 Metinleri seslendirmek için her metnin altındaki ses oynatıcısını kullanın</li>
+                             <li>Ses oluşturma için Google Text-to-Speech API anahtarı gereklidir</li>
             </ol>
           </div>
         </section>
