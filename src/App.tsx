@@ -6,7 +6,7 @@ import RouteSection from './Routes'
 
 function App() {
   return (
-    <div>
+    <div className="scrollbar-hide">
       <Header />
 
         <RouteSection />

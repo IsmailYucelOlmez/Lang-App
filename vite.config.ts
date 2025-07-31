@@ -5,6 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  optimizeDeps: {
+    include: ['react-pdf', 'pdfjs-dist']
+  },
+  assetsInclude: ['**/*.pdf'],
   server: {
     proxy: {
       '/api/deepl': {

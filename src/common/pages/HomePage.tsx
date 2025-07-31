@@ -1,11 +1,23 @@
+import BookSection from "../../features/book/components/BookSection"
+import CategorySection from "../components/homepage/CategorySection"
+import ExerciseInfoSection from "../components/homepage/ExerciseInfoSection"
+import HeroSection from "../components/homepage/HeroSection"
+
 
 const HomePage = () => {
   return (
-    <div>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga qui mollitia obcaecati ut aspernatur enim explicabo quaerat accusantium asperiores molestias unde officiis, ex inventore dolores! Iure fuga sit dignissimos rerum!
-      Cum, adipisci. Ullam numquam ipsa reprehenderit libero velit optio eos, voluptatibus amet rerum obcaecati accusamus quisquam! Ducimus quos tempore, eius, laborum dignissimos, consequatur atque quis odio ut doloribus veritatis esse.</p>
-    
-      <p>On these days, we are going to learn about the following topics: HTML, CSS, JavaScript, React, Node.js, MongoDB, Express.js, and more.</p>
+    <div className="w-full flex flex-col gap-16 mb-8 scrollbar-hide">
+        <HeroSection />
+
+        <BookSection title="Continue Reading" />
+
+        <ExerciseInfoSection />
+
+        <BookSection title="New Releases" />
+
+        <BookSection title="Popular" />
+
+        <CategorySection />
     </div>
   )
 }
