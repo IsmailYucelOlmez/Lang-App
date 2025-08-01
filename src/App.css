@@ -1,4 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 @import "tailwindcss";
+
+@theme {
+    --font-alata: 'Alata', sans-serif;
+    --font-josefin: 'Josefin Sans', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-source-code-pro: 'Source Code Pro', monospace;
+}
 
 .scrollbar-hide {
     /* Firefox */
@@ -19,4 +27,97 @@
 
 .scrollbar-hide::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
+}
+
+.react-pdf__Page__canvas {
+    display: none !important;
+}
+
+.react-pdf__Page__text {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* PDF sayfasının arka planını tema göre ayarla */
+.react-pdf__Page {
+    background-color: white !important;
+}
+
+.react-pdf__Page__canvas {
+    background-color: white !important;
+}
+
+.react-pdf__Page__textContent {
+    background-color: white !important;
+}
+
+/* Dark theme için siyah arka plan */
+.dark-pdf .react-pdf__Page,
+.dark-pdf .react-pdf__Page__canvas,
+.dark-pdf .react-pdf__Page__textContent {
+    background-color: black !important;
+}
+
+/* Daha spesifik dark theme kuralları */
+.dark-pdf-page {
+    background-color: black !important;
+}
+
+.dark-pdf-container .react-pdf__Page,
+.dark-pdf-container .react-pdf__Page__canvas,
+.dark-pdf-container .react-pdf__Page__textContent {
+    background-color: black !important;
+}
+
+/* Dark theme'da metinleri beyaz yap */
+.dark-pdf .react-pdf__Page__textContent span,
+.dark-pdf-container .react-pdf__Page__textContent span {
+    color: white !important;
+}
+
+.dark-pdf .react-pdf__Page__textContent,
+.dark-pdf-container .react-pdf__Page__textContent {
+    color: white !important;
+}
+
+.dark-pdf-page .react-pdf__Page__textContent span {
+    color: white !important;
+}
+
+/* Dark theme scrollbar stilleri */
+.dark-pdf-container ::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dark-pdf-container ::-webkit-scrollbar-track {
+    background: #374151;
+    border-radius: 4px;
+}
+
+.dark-pdf-container ::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    border-radius: 4px;
+}
+
+.dark-pdf-container ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* Ana container için dark theme scrollbar */
+.bg-black ::-webkit-scrollbar {
+    width: 8px;
+}
+
+.bg-black ::-webkit-scrollbar-track {
+    background: #374151;
+    border-radius: 4px;
+}
+
+.bg-black ::-webkit-scrollbar-thumb {
+    background: #6b7280;
+    border-radius: 4px;
+}
+
+.bg-black ::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
 }
