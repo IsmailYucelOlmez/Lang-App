@@ -121,3 +121,22 @@
 .bg-black ::-webkit-scrollbar-thumb:hover {
     background: #9ca3af;
 }
+
+/* PDF font styles */
+.pdf-text-layer {
+    font-family: inherit !important;
+}
+
+.pdf-page {
+    font-family: inherit !important;
+}
+
+/* PDF container font inheritance */
+.pdf-container {
+    font-family: inherit;
+}
+
+.pdf-container .react-pdf__Page__textContent,
+.pdf-container .react-pdf__Page__textContent span {
+    font-family: inherit !important;
+}
