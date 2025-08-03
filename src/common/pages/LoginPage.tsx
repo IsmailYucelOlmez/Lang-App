@@ -6,13 +6,33 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (email === 'admin@example.com' && password === '1212') {
-            navigate('/admin'); // Admin Panel sayfasına yönlendir
-        } else {
-            alert('E-posta veya şifre hatalı!');
+        try {
+            const response = await fetch("https://localhost:44354/api/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                alert("E-posta veya şifre hatalı!");
+                return;
+            }
+
+            const data = await response.json();
+            console.log("Login başarılı:", data);
+
+            // Örn. localStorage'a kaydedebilirsin
+            localStorage.setItem("user", JSON.stringify(data));
+
+            navigate('/admin'); // Admin paneline yönlendir
+        } catch (error) {
+            console.error("Login hatası:", error);
+            alert("Sunucuya bağlanılamadı!");
         }
     };
 
@@ -27,7 +47,6 @@ const LoginPage = () => {
                         <label className="block mb-1 font-medium">E-posta</label>
                         <input
                             type="email"
-                            placeholder="admin@example.com"
                             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -37,7 +56,6 @@ const LoginPage = () => {
                         <label className="block mb-1 font-medium">Şifre</label>
                         <input
                             type="password"
-                            placeholder="********"
                             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}

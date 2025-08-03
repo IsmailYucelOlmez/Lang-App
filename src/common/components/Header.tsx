@@ -1,6 +1,10 @@
 import Navbar from "./Navbar"
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="flex justify-evenly items-center p-4">
       <div>
@@ -9,7 +13,7 @@ const Header = () => {
       <Navbar />
 
       <div>
-        <h1>Login</h1>
+        <button onClick={() => navigate('/login')}>Login</button>
       </div>
     </div>
   )
