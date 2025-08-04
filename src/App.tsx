@@ -8,9 +8,9 @@ function App() {
   return (
     <div className="scrollbar-hide">
       <Header />
-
-        <RouteSection />
-
+      
+      <RouteSection />
+      
       <Footer />
     </div>
   )

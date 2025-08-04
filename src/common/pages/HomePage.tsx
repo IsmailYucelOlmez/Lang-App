@@ -5,6 +5,7 @@ import HeroSection from "../components/homepage/HeroSection"
 
 
 const HomePage = () => {
+
   return (
     <div className="w-full flex flex-col gap-16 mb-8 scrollbar-hide">
         <HeroSection />
@@ -19,7 +20,7 @@ const HomePage = () => {
 
         <CategorySection />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
