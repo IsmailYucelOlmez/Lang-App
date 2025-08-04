@@ -1,7 +1,7 @@
 import { fontOptions } from '../utils/fonts';
-import { ALargeSmall, ChevronDown, ChevronUp, Moon, Sun } from 'lucide-react';
+import { ALargeSmall, ChevronDown, ChevronUp, Moon, Play, Sun } from 'lucide-react';
 
-const ReaderSidebar = ({currentPagePair,numPages,darkTheme,fontDropdownRef,isFontDropdownOpen,setIsFontDropdownOpen,selectedFont,handleFontChange,setCurrentPagePair,setDarkTheme}:{currentPagePair:number,numPages:number,darkTheme:boolean,fontDropdownRef:React.RefObject<HTMLDivElement | null>,isFontDropdownOpen:boolean,setIsFontDropdownOpen:(value:boolean)=>void,selectedFont:string,handleFontChange:(value:string)=>void,setCurrentPagePair:(value:number)=>void,setDarkTheme:(value:boolean | ((prev: boolean) => boolean))=>void}) => {
+const ReaderSidebar = ({currentPagePair,numPages,darkTheme,fontDropdownRef,isFontDropdownOpen,setIsFontDropdownOpen,selectedFont,handleFontChange,setCurrentPagePair,setDarkTheme,showAudioControls,setShowAudioControls}:{currentPagePair:number,numPages:number,darkTheme:boolean,fontDropdownRef:React.RefObject<HTMLDivElement | null>,isFontDropdownOpen:boolean,setIsFontDropdownOpen:(value:boolean)=>void,selectedFont:string,handleFontChange:(value:string)=>void,setCurrentPagePair:(value:number)=>void,setDarkTheme:(value:boolean | ((prev: boolean) => boolean))=>void,showAudioControls:boolean,setShowAudioControls:(value:boolean | ((prev: boolean) => boolean))=>void}) => {
  
 
     const goToPreviousPair = () => {
@@ -18,6 +18,10 @@ const ReaderSidebar = ({currentPagePair,numPages,darkTheme,fontDropdownRef,isFon
 
         setDarkTheme((prev: boolean)=>!prev)
       }
+
+    const toggleAudioControls = () => {
+        setShowAudioControls((prev: boolean) => !prev);
+    };
  
     return (
     <div className="w-18 flex flex-col items-center gap-4">
@@ -70,11 +74,15 @@ const ReaderSidebar = ({currentPagePair,numPages,darkTheme,fontDropdownRef,isFon
               </div>
             </div>
 
+            <button onClick={toggleAudioControls} className={`hover:bg-gray-100 rounded-lg transition-colors ${darkTheme ? 'hover:bg-gray-700' : 'hover:bg-gray-100'} ${showAudioControls ? (darkTheme ? 'bg-blue-400' : 'bg-blue-300') : ''}`}>
+              <Play size={24} className={darkTheme ? 'text-gray-200' : 'text-gray-800'} />
+            </button>
+
             <button onClick={toggleTheme} className={`hover:bg-gray-100 rounded-lg transition-colors ${darkTheme ? 'hover:bg-gray-700' : 'hover:bg-gray-100'}`}>
               {darkTheme ? <Sun size={24} className="text-gray-200"/> : <Moon size={24} className="text-gray-800"/>}
             </button>
 
-          </div>
+    </div>
   )
 }
 

@@ -6,6 +6,8 @@ import TranslationTooltip from '../../translate/components/TranslationTooltip';
 import useTextSelection from '../../translate/hooks/useTextSelection';
 import ReaderSidebar from './ReaderSidebar';
 import { fontOptions } from '../utils/fonts';
+import usePageText from '../hooks/usePageText';
+import PageAudioPlayer from './PageAudioPlayer';
 
 
 const Reader = ({file}:{file:string}) => {
@@ -17,6 +19,7 @@ const Reader = ({file}:{file:string}) => {
     const [isFontDropdownOpen, setIsFontDropdownOpen] = useState<boolean>(false);
     const fontDropdownRef = useRef<HTMLDivElement>(null);
     const [darkTheme,setDarkTheme]=useState<boolean>(false);
+    const [showAudioControls, setShowAudioControls] = useState<boolean>(false);
     
     // Translation functionality
     const { selection, isVisible, translation, isLoading, hideTooltip } = useTextSelection();
@@ -49,6 +52,24 @@ const Reader = ({file}:{file:string}) => {
       return [firstPage, secondPage];
     };
 
+    // Text extraction for current pages
+    const currentPageNumbers = getPageNumbers();
+    
+    // Create hooks for each page (max 2 pages)
+    const firstPageText = usePageText({
+      pageNumber: currentPageNumbers[0] || 0,
+      onTextExtracted: (text) => {
+        console.log(`Page ${currentPageNumbers[0]} text extracted:`, text.substring(0, 100) + '...');
+      }
+    });
+    
+    const secondPageText = usePageText({
+      pageNumber: currentPageNumbers[1] || 0,
+      onTextExtracted: (text) => {
+        console.log(`Page ${currentPageNumbers[1]} text extracted:`, text.substring(0, 100) + '...');
+      }
+    });
+
     const handleFontChange = (fontValue: string) => {
       setSelectedFont(fontValue);
       setIsFontDropdownOpen(false);
@@ -74,7 +95,7 @@ const Reader = ({file}:{file:string}) => {
       };
     }, []);
 
-    const pageNumbers = getPageNumbers();
+
 
     
   
@@ -109,46 +130,73 @@ const Reader = ({file}:{file:string}) => {
             className={darkTheme ? 'dark-pdf' : ''}
           >
             <div className="flex justify-between">
-              {pageNumbers.map((pageNumber) => (
-                <div
-                  key={pageNumber}
-                  className={`flex-shrink-0 ${darkTheme ? 'dark-pdf-container' : ''}`}
-                  style={{
-                    backgroundColor: darkTheme ? '#1f2937' : 'transparent',
-                    borderRadius: '8px',
-                    padding: darkTheme ? '8px' : '0',
-                    boxShadow: darkTheme ? '0 4px 6px -1px rgba(0, 0, 0, 0.3)' : 'none',
-                    border: '2px solid',
-                    borderColor: darkTheme ? '#000' : '#e5e7eb',
-                    position: 'relative',
-                    zIndex: 200,
-                    maxWidth: '50%',
-                    maxHeight: '80vh',
-                    overflow: 'hidden'
-                  }}
-                >
-                  <div 
-                     className="pdf-container"
-                     style={{ 
-                     borderRadius: '6px', 
-                     overflow: 'hidden',
-                     maxHeight: '100%',
-                     overflowY: 'auto',
-                     backgroundColor: darkTheme ? '#000000' : 'white',
-                     filter: 'none',
-                     fontFamily: getSelectedFontFamily(),
-                     
-                   }}>
-                                         <Page
-                       pageNumber={pageNumber}
-                       className={`w-full h-auto ${darkTheme ? 'dark-pdf-page' : ''}`}
-                       renderTextLayer={true}
-                       renderAnnotationLayer={false}
-                       canvasBackground={darkTheme ? '#000000' : '#ffffff'}
-                     />
+              {currentPageNumbers.map((pageNumber, index) => {
+                const pageTextHook = index === 0 ? firstPageText : secondPageText;
+                const { pageText, pageRef } = pageTextHook;
+                
+                return (
+                  <div
+                    key={pageNumber}
+                    className={`flex-shrink-0 ${darkTheme ? 'dark-pdf-container' : ''}`}
+                    style={{
+                      backgroundColor: darkTheme ? '#1f2937' : 'transparent',
+                      borderRadius: '8px',
+                      padding: darkTheme ? '8px' : '0',
+                      boxShadow: darkTheme ? '0 4px 6px -1px rgba(0, 0, 0, 0.3)' : 'none',
+                      border: '2px solid',
+                      borderColor: darkTheme ? '#000' : '#e5e7eb',
+                      position: 'relative',
+                      zIndex: 200,
+                      maxWidth: '50%',
+                      maxHeight: '80vh',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    {/* Audio Controls */}
+                    {showAudioControls && (
+                      <div className="absolute top-2 right-2 z-10">
+                        {pageText ? (
+                          <PageAudioPlayer
+                            text={pageText}
+                            pageNumber={pageNumber}
+                            darkTheme={darkTheme}
+                            className="w-64"
+                          />
+                        ) : (
+                          <div className={`w-64 p-2 rounded-lg ${darkTheme ? 'bg-gray-800 text-gray-200' : 'bg-white text-gray-600'} border ${darkTheme ? 'border-gray-700' : 'border-gray-200'}`}>
+                            <div className="flex items-center space-x-2">
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+                              <span className="text-xs">Metin çıkarılıyor...</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    <div 
+                      ref={pageRef}
+                      className="pdf-container"
+                      style={{ 
+                        borderRadius: '6px', 
+                        overflow: 'hidden',
+                        maxHeight: '100%',
+                        overflowY: 'auto',
+                        backgroundColor: darkTheme ? '#000000' : 'white',
+                        filter: 'none',
+                        fontFamily: getSelectedFontFamily(),
+                      }}
+                    >
+                      <Page
+                        pageNumber={pageNumber}
+                        className={`w-full h-auto ${darkTheme ? 'dark-pdf-page' : ''}`}
+                        renderTextLayer={true}
+                        renderAnnotationLayer={false}
+                        canvasBackground={darkTheme ? '#000000' : '#ffffff'}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </Document>
         </div>
@@ -164,6 +212,8 @@ const Reader = ({file}:{file:string}) => {
             handleFontChange={handleFontChange}
             setCurrentPagePair={setCurrentPagePair}
             setDarkTheme={setDarkTheme}
+            showAudioControls={showAudioControls}
+            setShowAudioControls={setShowAudioControls}
           />
         )}
       </div>
