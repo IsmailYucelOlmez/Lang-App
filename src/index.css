@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive design for tooltip */
+@media (max-width: 768px) {
+  .translation-tooltip {
+    min-width: 250px;
+    max-width: 90vw;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
